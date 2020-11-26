@@ -99,7 +99,8 @@ case "dev": {
 
     const filePaths = {
       ejs: `${filePath.substring(0, filePath.length - 4)}ejs`,
-      moe: `${filePath.substring(0, filePath.length - 4)}moe`
+      moe: `${filePath.substring(0, filePath.length - 4)}moe`,
+      pug: `${filePath.substring(0, filePath.length - 4)}pug`
     };
 
     const file = fs.existsSync(filePaths.ejs) ? filePaths.ejs : fs.existsSync(filePaths.moe) ? filePaths.moe : "404";

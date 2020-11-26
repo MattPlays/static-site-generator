@@ -4,6 +4,9 @@ import * as path from "path";
 
 // template engines
 import * as ejs from "ejs";
+import * as hogan from "hogan.js"
+import * as pug from "pug"
+import * as handlebars from "handlebars"
 const moe = require("@toptensoftware/moe-js");
 
 // file support
@@ -392,7 +395,8 @@ addFileHandler({extension: "md", message: "parsed", callback: (data, file, fileP
 // register template extensions
 addPageFile("ejs");
 addPageFile("moe");
-
+addPageFile('pug');
+addPageFile('hogan');
 /**
  * EJS template handler
  */
@@ -418,7 +422,20 @@ addPageHandler({extension: "moe", callback: (data, filePath, callback) => {
     callback(template(data));
   });
 }});
-
+/**
+ * PUG template handler
+ */
+addPageHandler({extension: "pug", callback: (data, filePath, callback) => {
+  callback(pug.renderFile(filePath))
+}})
+/**
+ * Hogan template handler
+ */
+addPageHandler({extension: "hogan", callback: (data, filePath, callback) => {
+  let html = fs.readFileSync(filePath, "utf8")
+  var template = hogan.compile(html)
+  callback(template.render(data))
+}})
 export {
   ILogger,
   defaultLogger,
